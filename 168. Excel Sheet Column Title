@@ -1,0 +1,16 @@
+class Solution {
+    public String convertToTitle(int columnNumber) {
+        
+        StringBuilder columnTitle = new StringBuilder();
+        
+        while (columnNumber > 0) {
+            columnNumber--; // Adjust for 1-based indexing
+            int remainder = columnNumber % 26;
+            char columnChar = (char) (remainder + 'A');
+            columnTitle.insert(0, columnChar); // Prepend character
+            columnNumber /= 26;
+        }
+        
+        return columnTitle.toString();
+    }
+}
