@@ -1,0 +1,43 @@
+class Solution {
+    public String reorganizeString(String s) {
+
+        HashMap<Character,Integer> h = new HashMap<>();
+
+        for(int i=0 ; i<s.length();i++){
+            char ch = s.charAt(i);
+            h.put(ch,h.getOrDefault(ch,0)+1);
+        }
+
+        Queue<Character> maxHeap = new PriorityQueue<>((a,b) -> h.get(b) - h.get(a));
+        maxHeap.addAll(h.keySet());
+        StringBuilder sb = new StringBuilder();
+
+        while(maxHeap.size()  > 1){
+            char firstChar = maxHeap.poll();
+            sb.append(firstChar);
+            h.put(firstChar,h.get(firstChar)-1);
+
+            char secondChar = maxHeap.poll();
+            sb.append(secondChar);
+            h.put(secondChar ,h.get(secondChar )-1);
+
+            if(h.get(firstChar)>0){
+                maxHeap.add(firstChar);
+            }
+            if(h.get(secondChar)>0){
+                maxHeap.add(secondChar );
+            }
+
+        }
+
+        if(!maxHeap.isEmpty()){
+            if(h.get(maxHeap.peek()) > 1){
+                return "";
+            }else{
+                sb.append(maxHeap.peek());
+            }
+        }
+
+        return sb.toString();
+    }
+}
